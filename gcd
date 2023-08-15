@@ -1,0 +1,65 @@
+#include<iostream>
+using namespace std;
+#include<time.h>
+
+long int midsch(long int m, long int n)
+{
+    clock_t start, end;
+    long int i, gcd;
+    start=clock();
+    for(i=1; i<=m && i<=n; ++i)
+    {
+        if(m%i==0 && n%i==0)
+        {
+            gcd=i;
+        }
+    }
+    end=clock();
+    cout<<endl<<"time taken: "<<(end-start)/CLOCKS_PER_SEC<<"sec, GCD";
+    return gcd;
+}
+
+long int eudiv(long int m, long int n)
+{
+    clock_t start, end;
+    long int r;
+    start=clock();
+    while(n!=0)
+    {
+        r=m%n;
+        m=n;
+        n=r;
+    }
+    end=clock();
+    cout<<endl<<"time taken: "<<(end-start)/CLOCKS_PER_SEC<<"sec, GCD";
+    return m;
+}
+
+long int eusub(long int m, long int n)
+{
+    clock_t start, end;
+    start=clock();
+    while(m!=n)
+    {
+        if(m>n)
+        {
+            m=m-n;
+        }
+        if(n>m)
+        {
+            n=n-m;
+        }
+    }
+    end=clock();
+    cout<<endl<<"time taken: "<<(end-start)/CLOCKS_PER_SEC<<"sec, GCD";
+    return m;
+}
+
+int main(){
+    long int x, y;
+    cout<<"\nEnter the two numbers to find their GCD: "<<endl;
+    cin>>x>>y;
+    cout<<"\nGCD by middle school procedure: "<<midsch(x,y);
+    cout<<"\n\nGCD by euclid's division method: "<<eudiv(x,y);
+    cout<<"\n\nGCD by euclid's subtraction method: "<<eusub(x,y);
+}
