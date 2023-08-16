@@ -1,0 +1,86 @@
+#include<iostream>
+#include<time.h>
+#include<cstdlib>
+using namespace std;
+
+void merge(int *a, int low, int high, int mid)
+{
+    int i, j, k, temp[high-low+1];
+    i=low;
+    j=mid+1;
+    k=0;
+    while(i<=mid&&j<=high)
+    {
+        if(a[i]<a[j])
+        {
+            temp[k]=a[i];
+            i++;
+            k++;
+
+        }
+        else{
+            temp[k]=a[j];
+            j++;
+            k++;
+        }
+    }
+    while(i<=mid)
+    {
+        temp[k]=a[i];
+        i++;
+        k++;
+    }
+    while(j<=high)
+    {
+        temp[k]=a[j];
+        j++;
+        k++;
+    }
+
+    //writing temp[] on a[]
+    for(i=low; i<=high; i++)
+    {
+        a[i]=temp[i-low];
+    }
+}
+void mergesrt(int *a, int low, int high)
+{
+    int mid;
+    if(high>low)
+    {
+        mid=(high+low)/2;
+        mergesrt(a, low, mid);
+        mergesrt(a, mid+1, high);
+
+        merge(a, low, high, mid);
+    }
+}
+void printarr(int arr[], int n)
+{
+    int i;
+    cout<<"\nThe array is: ";
+    for(i=0; i<n; i++)
+    {
+        cout<<"\t"<<arr[i];
+    }
+}
+
+int main()
+{
+    int i, n, a[100];
+    cout<<"\nEnter the number of elements in the array: ";
+    cin>>n;
+    cout<<"\nElements are generated randomly: ";
+    for(i=0; i<n; i++)
+    {
+        a[i]=rand();
+    }
+    printarr(a, n);
+    clock_t start, end;
+    start=clock();
+    mergesrt(a, 0, n);
+    end=clock();
+    cout<<"\nThe time taken by merge srt is : "<<end-start;
+    printarr(a, n);
+
+}
